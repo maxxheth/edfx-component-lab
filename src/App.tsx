@@ -1,10 +1,12 @@
-import ExpandableMenu from "./Components/ExpandableMenu";
+import ExpandableMenu from "./Components/Menus/ExpandableMenu";
+import MouseFollower from "./Components/Mouse/MouseFollower";
 
 function App() {
 	// const [count, setCount] = useState(0)
 
 	return (
 		<>
+      <MouseFollower />
 			<ExpandableMenu />
 			{/* <div>
         <a href="https://vitejs.dev" target="_blank">
