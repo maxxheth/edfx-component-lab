@@ -1,5 +1,6 @@
 import ExpandableMenu from "./Components/Menus/ExpandableMenu";
 import MouseFollower from "./Components/Mouse/MouseFollower";
+import DotsGrid from "./Components/Effects/DotsGrid";
 
 function App() {
 	// const [count, setCount] = useState(0)
@@ -8,6 +9,7 @@ function App() {
 		<>
       <MouseFollower />
 			<ExpandableMenu />
+      <DotsGrid />
 			{/* <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
