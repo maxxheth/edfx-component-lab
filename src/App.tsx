@@ -1,4 +1,4 @@
-import ExpandableMenu from "./Components/ExpandableMenu";
+import ExpandableMenu from "./Components/Menus/ExpandableMenu";
 import MouseFollower from "./Components/Mouse/MouseFollower";
 import DotsGrid from "./Components/Effects/DotsGrid";
 

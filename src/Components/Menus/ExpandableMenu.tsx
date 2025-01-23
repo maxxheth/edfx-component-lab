@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { colorAtom } from "../../atoms";
 import { useAtom } from "jotai";
+import { MagnetMaterialButton } from "../UI/MagnetMaterialButton";
 
 const ExpandableMenu: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -13,13 +14,12 @@ const ExpandableMenu: React.FC = () => {
 
 	return (
 		<div className="relative">
-			<button
-				type="button"
-				className="relative z-10 w-auto px-4 py-2 text-white bg-blue-500 rounded cursor-pointer"
+			<MagnetMaterialButton
+				className="relative z-10 w-auto px-4 py-2 text-white bg-blue-500"
 				onClick={toggleMenu}
 			>
 				Toggle Menu
-			</button>
+			</MagnetMaterialButton>
 			<nav
 				className={`transition-opacity duration-300
 		fixed top-0 left-0 w-full h-full bg-black pointer-events-none z-0`}
