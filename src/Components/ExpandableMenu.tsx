@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const ExpandableMenu: React.FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
