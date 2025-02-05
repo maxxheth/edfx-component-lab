@@ -1,22 +1,35 @@
 import { useEffect, useRef } from "react";
 import Matter from "matter-js";
 
-interface DotsGridProps {
+type DotsGridProps = {
 	gridWidth?: number;
 	gridHeight?: number;
 	spacing?: number;
 	dotRadius?: number;
-}
+	calcWidthByParent?: boolean;
+	calcWidthByParentOffset?: number;
+};
 
 const DotsGrid: React.FC<DotsGridProps> = ({
 	gridWidth = 100,
 	gridHeight = 50,
 	spacing = 50,
 	dotRadius = 5,
+	calcWidthByParent = false,
+	calcWidthByParentOffset = 0,
 }) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
+	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
+		const container = containerRef.current;
+		if (!container) return;
+
+		// Calculate grid dimensions based on container size if calcWidthByParent is true
+		const effectiveGridWidth = calcWidthByParent
+			? Math.floor((container.clientWidth - calcWidthByParentOffset) / spacing)
+			: gridWidth;
+
 		// Module aliases
 		const Engine = Matter.Engine;
 		const Runner = Matter.Runner;
@@ -31,15 +44,15 @@ const DotsGrid: React.FC<DotsGridProps> = ({
 
 		// Get the canvas and context
 		const canvas = canvasRef.current;
-		if (!canvas) return; // Early return if canvas is not available
+		if (!canvas) return;
 		const context = canvas.getContext("2d");
-		if (!context) return; // Early return if context is not available
+		if (!context) return;
 
 		// Extend the Matter.Body interface with a size property
 		type BodyWithSize = Matter.Body & { size: number };
 
 		const dots: BodyWithSize[] = [];
-		const totalDots = gridWidth * gridHeight;
+		const totalDots = effectiveGridWidth * gridHeight;
 
 		for (let index = 0; index < totalDots; index++) {
 			const i = Math.floor(index / gridHeight);
@@ -152,15 +165,24 @@ const DotsGrid: React.FC<DotsGridProps> = ({
 			Matter.Engine.clear(engine);
 			canvas.removeEventListener("mouseleave", resetDots);
 		};
-	}, [gridWidth, gridHeight, spacing, dotRadius]); // Adding dependencies for useEffect
+	}, [
+		gridWidth,
+		gridHeight,
+		spacing,
+		dotRadius,
+		calcWidthByParent,
+		calcWidthByParentOffset,
+	]);
 
 	return (
-		<canvas
-			ref={canvasRef}
-			className="relative z-10"
-			width={window.innerWidth / 2}
-			height={window.innerHeight / 2}
-		/>
+		<div ref={containerRef} className="w-full h-full">
+			<canvas
+				ref={canvasRef}
+				className="relative z-10"
+				width={window.innerWidth}
+				height={window.innerHeight}
+			/>
+		</div>
 	);
 };
 
